@@ -45,6 +45,7 @@ cgNAplus_python.mat
 cgNAplus_2D_cgDNA.png
 cgNAplus_2D_phosphate.png
 cgNAplus_3D.png
+base_atoms.pdb
 ```
 
 and a PDB structure through the built-in PDB-generation functionality.
