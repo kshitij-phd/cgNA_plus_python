@@ -1,4 +1,4 @@
-# cgNA+ Python
+# cgNA+ Python (2026)
 
 Python implementation of the **cgNA+ sequence-dependent coarse-grained model of double-stranded nucleic acids**.
 
