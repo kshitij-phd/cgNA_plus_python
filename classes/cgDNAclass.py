@@ -171,8 +171,76 @@ class cgDNA:
 ###########################################################################
 #                       MAKE PDB  
 ###########################################################################                
-    def makePDB(self):
-        self.test = 4
+    def makePDB(self, filename="base_atoms.pdb"):
+        """
+        Generate a PDB file containing ideal base and phosphate atoms
+        from the cgNA+ ground-state structure.
+
+        Parameters
+        ----------
+        filename : str or Path
+            Output PDB filename.
+
+        Returns
+        -------
+        Path
+            Path to the generated PDB file.
+        """
+
+        from cgNA_plus.modules import cgDNAUtils as tools
+        from utilities.basepair_atoms import basepair_to_atoms
+        from utilities.arrange_atoms import arrange_atoms
+        from utilities.pdb_writer import write_pdb
+
+        # Validate cgDNA object
+        if self.ground_state is None:
+            raise ValueError("Ground-state coordinates are not available.")
+
+        sequence = self.seq
+        nbp = self.nbp
+
+        if not sequence:
+            raise ValueError("DNA sequence is empty.")
+
+        if nbp != len(sequence):
+            raise ValueError(
+                f"nbp ({nbp}) does not match sequence length ({len(sequence)})."
+            )
+
+        # ------------------------------------------------------------
+        # 1. Convert cgNA+ ground-state coordinates to frames
+        # ------------------------------------------------------------
+
+        bp_level = tools.frames(self.ground_state)
+
+        # ------------------------------------------------------------
+        # 2. Embed Tsukuba ideal atoms into cgNA+ frames
+        # ------------------------------------------------------------
+
+        atoms_base, atoms_pho = basepair_to_atoms(
+            bp_level,
+            sequence,
+        )
+
+        # ------------------------------------------------------------
+        # 3. Reproduce MATLAB ArrangeAtoms.m
+        # ------------------------------------------------------------
+
+        atoms_coord = arrange_atoms(
+            atoms_base,
+            atoms_pho,
+            nbp,
+        )
+
+        # ------------------------------------------------------------
+        # 4. Write PDB
+        # ------------------------------------------------------------
+
+        return write_pdb(
+            atoms_coord,
+            sequence,
+            filename,
+        )
 
 ###########################################################################
 #                       ADDOTHERSHAPES  

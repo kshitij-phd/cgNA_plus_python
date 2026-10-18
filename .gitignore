@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.class
+
+# Python packaging
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Generated cgNA+ outputs
+/cgNAplus_data.mat
+/cgNAplus_python.mat
+/cgNAplus_2D_cgDNA.png
+/cgNAplus_2D_phosphate.png
+/cgNAplus_3D.png
+/base_atoms.pdb
+
+# Generated logs
+*.log
